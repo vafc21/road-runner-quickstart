@@ -159,8 +159,8 @@ public class MainTeleOpMode extends LinearOpMode {
 //            BLMotor.setPower(BLpower * speedForDrive);
 //            BRMotor.setPower(BRpower * speedForDrive);
 //            FRMotor.setPower(FRpower * speedForDrive);
-            Vector2d translationalVelocity = new Vector2d(DConstant * drive, DConstant * turn);
-            double rotationalVelocity = DConstant * rotate;
+            Vector2d translationalVelocity = new Vector2d(DConstant * -drive, DConstant * -turn);
+            double rotationalVelocity = DConstant * -rotate;
 
             PoseVelocity2d velocity = new PoseVelocity2d(translationalVelocity, rotationalVelocity);
 
