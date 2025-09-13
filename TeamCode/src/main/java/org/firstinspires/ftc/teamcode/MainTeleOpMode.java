@@ -30,10 +30,6 @@ public class MainTeleOpMode extends LinearOpMode {
 //    private DcMotor FLMotor = null;
 //    private DcMotor BRMotor;
 //    private DcMotor BLMotor;
-    private DcMotorEx Pivot;
-    private CRServo Intake;
-    private DcMotor Extension;
-    private CRServo dispenser;
     private double kp = 0.007;
 
     private Pose2d StartPose = new Pose2d(0, 0, 0);
