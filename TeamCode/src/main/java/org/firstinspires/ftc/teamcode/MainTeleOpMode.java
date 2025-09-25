@@ -75,7 +75,7 @@ public class MainTeleOpMode extends LinearOpMode {
 //            double rotateSpeed = 0.8;
             double rotateSpeed = 0.8;
             double turn = -gamepad2.left_stick_x;
-            double drive  =  gamepad2.left_stick_y;
+            double drive  =  -gamepad2.left_stick_y;
             double rotate = -gamepad2.right_stick_x * rotateSpeed;
             double speedForDrive = 0.9;
             boolean isGamepad2LeftStickPressed = gamepad2.left_stick_button;
