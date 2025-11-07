@@ -114,7 +114,8 @@ public class MainTeleOpMode extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("poseX",Drive.updatePoseEstimate().linearVel.x);
+            telemetry.addData("poseVX",Drive.updatePoseEstimate().linearVel.x);
+            telemetry.addData("posVY",Drive.updatePoseEstimate().linearVel.y);
             telemetry.addData("AngV", Drive.updatePoseEstimate().angVel);
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
