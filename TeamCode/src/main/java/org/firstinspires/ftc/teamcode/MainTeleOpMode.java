@@ -20,6 +20,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 import org.firstinspires.ftc.teamcode.util.PIDController;
 
 @TeleOp(name="TeleopOp_Main")
@@ -49,6 +51,8 @@ public class MainTeleOpMode extends LinearOpMode {
 //        BRMotor = hardwareMap.get(DcMotor.class, "BackRightMotor");.
         //Intake = hardwareMap.get(CRServo.class, "Intake");
         MecanumDrive Drive = new MecanumDrive(hardwareMap, StartPose);
+        Intake intake = new Intake(hardwareMap);
+        Outtake outtake = new Outtake(hardwareMap);
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -92,13 +96,16 @@ public class MainTeleOpMode extends LinearOpMode {
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
-
+            intake.intake(gamepad1.a, gamepad1.b);
+            outtake.outtake(gamepad1.right_bumper);
+            /*
             if (G2RT > 0.01){
                 rotate += G2RT*0.5;
 
             }else if (G2LT > 0.01){
                 rotate -= G2LT*0.5;
-            }
+            }*/
+
 //
 //            // Send calculated power to wheels
 //            FLMotor.setPower(FLpower * speedForDrive);
