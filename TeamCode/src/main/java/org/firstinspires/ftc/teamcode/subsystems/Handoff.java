@@ -11,18 +11,23 @@ public class Handoff {
         top = hardwareMap.get(CRServo.class, "TopHandoff");
         bottom = hardwareMap.get(CRServo.class, "BottomHandoff");
     }
+    public void stopMotors(){
+        top.setPower(0);
+        bottom.setPower(0);
+    }
     public void store(boolean t){
         if (t) {
             top.setPower(pow);
             bottom.setPower(pow);
         }
+        stopMotors();
     }
     public void handoff(boolean t){
         if(t){
             top.setPower(-pow);
             bottom.setPower(pow);
         }
-
+        stopMotors();
     }
 
 }

@@ -14,6 +14,8 @@ public class Intake {
             IntakeMotor.setPower(pow);
         } else if (p2) {
             IntakeMotor.setPower(-pow);
+        } else {
+            IntakeMotor.setPower(0);
         }
     }
 }

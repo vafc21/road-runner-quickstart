@@ -17,5 +17,9 @@ public class Outtake {
             double bottomPow = .5;
             OuttakeBottomMotor.setPower(bottomPow);
         }
+        else {
+            OuttakeTopMotor.setPower(0);
+            OuttakeBottomMotor.setPower(0);
+        }
     }
 }
