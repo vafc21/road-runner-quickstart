@@ -8,6 +8,9 @@ public class Intake {
     public Intake(HardwareMap hardwareMap) {
         IntakeMotor = hardwareMap.get(DcMotor.class,"IntakeMotor");
     }
+    public void runMotor(double pow){
+        IntakeMotor.setPower(pow);
+    }
     public void intake(boolean p1,boolean p2){
         double pow = .5;
         if (p1){
