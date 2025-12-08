@@ -11,8 +11,11 @@ public class Intake {
     public void runMotor(double pow){
         IntakeMotor.setPower(pow);
     }
+    public void stopMotor(){
+        runMotor(0);
+    }
     public void intake(boolean p1,boolean p2){
-        double pow = .5;
+        double pow = 0.5;
         if (p1){
             IntakeMotor.setPower(pow);
         } else if (p2) {

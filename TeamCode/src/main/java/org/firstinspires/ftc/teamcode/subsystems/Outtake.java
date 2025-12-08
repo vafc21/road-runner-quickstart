@@ -10,9 +10,12 @@ public class Outtake {
         OuttakeTopMotor = hardwareMap.get(DcMotor.class,"OuttakeTopMotor");
         OuttakeBottomMotor = hardwareMap.get(DcMotor.class,"OuttakeBottomMotor");
     }
-    public void runMotor(double pow){
-        OuttakeTopMotor.setPower(pow);
-        OuttakeBottomMotor.setPower(pow);
+    public void runMotor(double top_pow,double bottom_pow){
+        OuttakeTopMotor.setPower(top_pow);
+        OuttakeBottomMotor.setPower(bottom_pow);
+    }
+    public void stopMotors(){
+        runMotor(0,0);
     }
     public void outtake(boolean p){
         if (p){

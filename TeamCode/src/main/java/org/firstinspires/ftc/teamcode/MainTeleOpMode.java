@@ -1,39 +1,26 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
-import androidx.core.math.MathUtils;
-
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
 
 import org.firstinspires.ftc.teamcode.subsystems.Handoff;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
-import org.firstinspires.ftc.teamcode.util.PIDController;
 
-@TeleOp(name="TeleopOp_Main")
+@TeleOp(name="TeleOp_Main")
 public class MainTeleOpMode extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-//    private DcMotor FRMotor = null;
+    //    private DcMotor FRMotor = null;
 //    private DcMotor FLMotor = null;
 //    private DcMotor BRMotor;
 //    private DcMotor BLMotor;
-    private double kp = 0.007;
+    private final double kp = 0.007;
 
     private Pose2d StartPose = new Pose2d(0, 0, 0);
 
@@ -98,10 +85,20 @@ public class MainTeleOpMode extends LinearOpMode {
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
-            intake.intake(gamepad1.a, gamepad1.b);
-            outtake.outtake(gamepad1.right_bumper);
-            handoff.handoff(gamepad1.left_bumper);
-            handoff.store(gamepad1.y);
+            if (gamepad1.left_trigger > 0.1 && gamepad1.right_trigger > 0.1){
+                stop();
+                outtake.stopMotors();
+                intake.stopMotor();
+                handoff.stopMotors();
+                break;
+            } else {
+                intake.intake(gamepad1.a, gamepad1.b);
+                outtake.outtake(gamepad1.right_bumper);
+                handoff.handoff(gamepad1.left_bumper);
+                handoff.store(gamepad1.x);
+                if (gamepad1.y) handoff.stopMotors();
+            }
+
             /*
             if (G2RT > 0.01){
                 rotate += G2RT*0.5;
