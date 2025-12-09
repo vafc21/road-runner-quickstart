@@ -19,9 +19,9 @@ public class Outtake {
     }
     public void outtake(boolean p){
         if (p){
-            double topPow = .5;
+            double topPow = 1;
             OuttakeTopMotor.setPower(topPow);
-            double bottomPow = .5;
+            double bottomPow = 1;
             OuttakeBottomMotor.setPower(bottomPow);
         }
         else {

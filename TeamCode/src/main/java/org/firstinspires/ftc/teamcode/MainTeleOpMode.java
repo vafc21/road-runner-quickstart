@@ -67,9 +67,9 @@ public class MainTeleOpMode extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
 //            double rotateSpeed = 0.8;
             double rotateSpeed = 0.8;
-            double turn = -gamepad2.left_stick_x;
-            double drive  =  -gamepad2.left_stick_y;
-            double rotate = -gamepad2.right_stick_x * rotateSpeed;
+            double turn = gamepad1.left_stick_x;
+            double drive  =  gamepad1.left_stick_y;
+            double rotate = gamepad1.right_stick_x * rotateSpeed;
             double speedForDrive = 0.9;
             boolean isGamepad2LeftStickPressed = gamepad2.left_stick_button;
             float G2RT = gamepad2.right_trigger;

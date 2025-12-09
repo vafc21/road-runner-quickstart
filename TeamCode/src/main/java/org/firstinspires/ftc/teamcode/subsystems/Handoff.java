@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Handoff {
-    private final CRServo top;
-    private final CRServo bottom;
-    private final double pow = 0.5;
+    public final CRServo top;
+    public final CRServo bottom;
+    private final double pow = 1;
     public Handoff(HardwareMap hardwareMap){
         top = hardwareMap.get(CRServo.class, "TopHandoff");
         bottom = hardwareMap.get(CRServo.class, "BottomHandoff");
