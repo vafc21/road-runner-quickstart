@@ -24,4 +24,10 @@ public class Intake {
             stopMotor();
         }
     }
+    public void takeInToggle(boolean b){
+        double pow = 1;
+        if (b){
+            runMotor(pow);
+        }
+    }
 }

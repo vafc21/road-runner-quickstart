@@ -74,10 +74,15 @@ public class MainTeleOpMode extends LinearOpMode {
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
 
-            intake.intake(gamepad1.a, gamepad1.left_bumper);
+            //intake.intake(gamepad1.a, gamepad1.left_bumper);
+            intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
+            if (gamepad1.b){
+                intake.stopMotor();
+                handoff.stopMotors();
+            }
             outtake.outtake(gamepad1.right_bumper);
-            if (gamepad1.dpad_up) handoff.stopMotors();
-            handoff.toggle(gamepad1.dpad_down);
+            //if (gamepad1.dpad_up) handoff.stopMotors();
+
             //handoff.handoff(gamepad1.left_bumper);
             //handoff.store(gamepad1.a);
 

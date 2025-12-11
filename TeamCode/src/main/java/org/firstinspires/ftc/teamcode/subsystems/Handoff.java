@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Handoff {
     private final DcMotor top;
     private final CRServo bottom;
-    private boolean toggleV = true;
+    private boolean toggleV = false;
     private final double pow = 1;
     public Handoff(HardwareMap hardwareMap){
         top = hardwareMap.get(DcMotor.class, "TopHandoff");
@@ -55,6 +55,20 @@ public class Handoff {
                 toggleV = true;
             }
         }
+    }
+    public boolean toggleReturn(boolean t){
+        if (t){
+            if (toggleV){
+                handoff(true);
+                toggleV = false;
+                return false;
+            } else {
+                store(true);
+                toggleV = true;
+                return true;
+            }
+        }
+        return false;
     }
 
 }
