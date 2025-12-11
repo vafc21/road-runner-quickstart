@@ -1,36 +1,40 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Handoff {
-    public final CRServo top;
-    public final CRServo bottom;
+    private final DcMotor top;
+    private final CRServo bottom;
     private final double pow = 1;
     public Handoff(HardwareMap hardwareMap){
-        top = hardwareMap.get(CRServo.class, "TopHandoff");
+        top = hardwareMap.get(DcMotor.class, "TopHandoff");
         bottom = hardwareMap.get(CRServo.class, "BottomHandoff");
     }
-    public void runMotor(double pow){
-        top.setPower(pow);
-        bottom.setPower(pow);
+    public void runMotor(double top_pow){
+        top.setPower(top_pow);
+        //bottom.setPower(bottom_pow);
     }
     public void stopMotors(){
         runMotor(0);
     }
     public void store(boolean t){
         if (t) {
-            top.setPower(pow);
-            bottom.setPower(pow);
+            runMotor(pow);
+        }else {
+            stopMotors();
         }
-        stopMotors();
+
     }
     public void handoff(boolean t){
         if(t){
-            top.setPower(-pow);
-            bottom.setPower(pow);
+            runMotor(pow);
+
+        } else {
+            stopMotors();
         }
-        stopMotors();
+
     }
 
 }
