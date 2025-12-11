@@ -14,19 +14,19 @@ public class Outtake {
         OuttakeTopMotor.setPower(top_pow);
         OuttakeBottomMotor.setPower(bottom_pow);
     }
+    public void runMotor(double pow){
+        OuttakeTopMotor.setPower(pow);
+        OuttakeBottomMotor.setPower(pow);
+    }
     public void stopMotors(){
         runMotor(0,0);
     }
     public void outtake(boolean p){
         if (p){
-            double topPow = 1;
-            OuttakeTopMotor.setPower(topPow);
-            double bottomPow = 1;
-            OuttakeBottomMotor.setPower(bottomPow);
+            runMotor(1);
         }
         else {
-            OuttakeTopMotor.setPower(0);
-            OuttakeBottomMotor.setPower(0);
+            stopMotors();
         }
     }
 }

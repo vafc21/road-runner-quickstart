@@ -47,9 +47,6 @@ public class MainTeleOpMode extends LinearOpMode {
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
 
 
-//        FRMotor.setDirection(DcMotor.Direction.REVERSE);
-//        BRMotor.setDirection(DcMotor.Direction.FORWARD);
-
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -70,42 +67,20 @@ public class MainTeleOpMode extends LinearOpMode {
             double turn = gamepad1.left_stick_x;
             double drive  =  gamepad1.left_stick_y;
             double rotate = gamepad1.right_stick_x * rotateSpeed;
-            double speedForDrive = 0.9;
-            boolean isGamepad2LeftStickPressed = gamepad2.left_stick_button;
-            float G2RT = gamepad2.right_trigger;
-            float G2LT = gamepad2.left_trigger;
-
-
-
-            boolean isGamepad1LeftStickPressed = gamepad1.left_stick_button;
-            boolean isGamepad1RightStickPressed = gamepad1.right_stick_button;
 
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
-            if (gamepad1.left_trigger > 0.1 && gamepad1.right_trigger > 0.1){
-                stop();
-                outtake.stopMotors();
-                intake.stopMotor();
-                handoff.stopMotors();
-                break;
-            } else {
-                intake.intake(gamepad1.a, gamepad1.b);
-                outtake.outtake(gamepad1.right_bumper);
-                handoff.handoff(gamepad1.left_bumper);
-                handoff.store(gamepad1.x);
-                if (gamepad1.y) handoff.stopMotors();
-            }
 
-            /*
-            if (G2RT > 0.01){
-                rotate += G2RT*0.5;
+            intake.intake(gamepad1.a, gamepad1.left_bumper);
+            outtake.outtake(gamepad1.right_bumper);
+            if (gamepad1.dpad_up) handoff.stopMotors();
+            handoff.toggle(gamepad1.dpad_down);
+            //handoff.handoff(gamepad1.left_bumper);
+            //handoff.store(gamepad1.a);
 
-            }else if (G2LT > 0.01){
-                rotate -= G2LT*0.5;
-            }*/
 
 //
 //            // Send calculated power to wheels
