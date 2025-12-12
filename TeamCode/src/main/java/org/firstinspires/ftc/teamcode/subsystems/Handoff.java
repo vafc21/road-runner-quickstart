@@ -6,41 +6,65 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Handoff {
     private final DcMotor top;
     private final CRServo bottom;
     private boolean toggleV = false;
-    private final double pow = 1;
+    private final double pow = .5;
     public Handoff(HardwareMap hardwareMap){
         top = hardwareMap.get(DcMotor.class, "TopHandoff");
         bottom = hardwareMap.get(CRServo.class, "BottomHandoff");
         top.setDirection(REVERSE);
+
     }
     public void runMotor(double top_pow, double bottom_pow){
         top.setPower(top_pow);
-        bottom.setPower(bottom_pow);
+        bottom.setPower(Math.abs(bottom_pow));
     }
-    public void runMotor(double pow1){
-        top.setPower(pow1);
-        bottom.setPower(pow1);
+    public void runMotor(double p){
+        top.setPower(p);
+        bottom.setPower(Math.abs(p));
     }
     public void stopMotors(){
         runMotor(0);
     }
     public void store(boolean t){
         if (t) {
-            runMotor(pow);
+            runMotor(pow,1);
         }else {
+            stopMotors();
+        }
+
+    }
+    public void storeWait(boolean t){
+        if (t){
+            ElapsedTime timer = new ElapsedTime();
+            timer.startTime();
+            while (timer.milliseconds()<3000){
+                handoff(true);
+            }
             stopMotors();
         }
 
     }
     public void handoff(boolean t){
         if(t){
-            runMotor(-pow);
+            runMotor(-pow,1);
 
         } else {
+            stopMotors();
+        }
+
+    }
+    public void handoffWait(boolean t){
+        if (t){
+            ElapsedTime timer = new ElapsedTime();
+            timer.startTime();
+            while (timer.milliseconds()<300){
+                handoff(true);
+            }
             stopMotors();
         }
 
@@ -56,19 +80,30 @@ public class Handoff {
             }
         }
     }
-    public boolean toggleReturn(boolean t){
+    public void toggleWait(boolean t){
         if (t){
             if (toggleV){
-                handoff(true);
+                handoffWait(true);
                 toggleV = false;
-                return false;
             } else {
-                store(true);
+                storeWait(true);
                 toggleV = true;
-                return true;
             }
         }
-        return false;
+    }
+    public int toggleReturn(boolean t){
+        if (t){
+            if (toggleV){
+                handoffWait(true);
+                toggleV = false;
+                return 1;
+            } else {
+                storeWait(true);
+                toggleV = true;
+                return 2;
+            }
+        }
+        return 0;
     }
 
 }

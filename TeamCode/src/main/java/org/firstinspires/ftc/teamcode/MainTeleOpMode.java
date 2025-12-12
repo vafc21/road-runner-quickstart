@@ -51,6 +51,8 @@ public class MainTeleOpMode extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        intake.stopMotor();
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -75,11 +77,13 @@ public class MainTeleOpMode extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             //intake.intake(gamepad1.a, gamepad1.left_bumper);
-            intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
             if (gamepad1.b){
                 intake.stopMotor();
                 handoff.stopMotors();
             }
+            //intake.toggle(gamepad1.a);
+            //handoff.handoffWait(gamepad1.x);
+            intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
             outtake.outtake(gamepad1.right_bumper);
             //if (gamepad1.dpad_up) handoff.stopMotors();
 
