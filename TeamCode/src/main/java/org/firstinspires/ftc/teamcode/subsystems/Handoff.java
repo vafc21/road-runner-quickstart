@@ -12,7 +12,7 @@ public class Handoff {
     private final DcMotor top;
     private final CRServo bottom;
     private boolean toggleV = false;
-    private final double pow = .5;
+    private final double pow = 1;
     public Handoff(HardwareMap hardwareMap){
         top = hardwareMap.get(DcMotor.class, "TopHandoff");
         bottom = hardwareMap.get(CRServo.class, "BottomHandoff");
@@ -22,6 +22,10 @@ public class Handoff {
     public void runMotor(double top_pow, double bottom_pow){
         top.setPower(top_pow);
         bottom.setPower(Math.abs(bottom_pow));
+    }
+
+    public void setServoPower(double p) {
+        bottom.setPower(p);
     }
     public void runMotor(double p){
         top.setPower(p);

@@ -17,13 +17,12 @@ public class Intake {
     }
     //public boolean getHasStopped(){ return hasStopped;}
     public void runMotor(double pow){
-        if(!hasStopped) {
-            IntakeMotor.setPower(pow);
-        }
+        IntakeMotor.setPower(pow);
+
     }
     public void stopMotor(){
         runMotor(0);
-        hasStopped = true;
+
 
     }
     public void intake(boolean p1,boolean p2){

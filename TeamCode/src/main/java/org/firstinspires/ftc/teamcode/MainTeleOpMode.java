@@ -77,13 +77,27 @@ public class MainTeleOpMode extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             //intake.intake(gamepad1.a, gamepad1.left_bumper);
-            if (gamepad1.b){
+            if (gamepad1.dpad_down){
                 intake.stopMotor();
                 handoff.stopMotors();
             }
-            //intake.toggle(gamepad1.a);
-            //handoff.handoffWait(gamepad1.x);
-            intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
+//            handoff.handoff(gamepad1.x);
+//            handoff.store(gamepad1.a);
+            if (gamepad1.a) {
+                handoff.runMotor(1.0, 1.0);
+                intake.runMotor(1);
+            } else if (gamepad1.x) {
+                handoff.runMotor(-1.0, 1.0);
+                intake.runMotor(-1);
+            } else {
+                handoff.runMotor(0.0, 0.0);
+                intake.runMotor(0);
+            }
+            //intake.intake(gamepad1.a,gamepad1.x);
+
+
+
+            //intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
             outtake.outtake(gamepad1.right_bumper);
             //if (gamepad1.dpad_up) handoff.stopMotors();
 
@@ -106,9 +120,11 @@ public class MainTeleOpMode extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("poseVX",Drive.updatePoseEstimate().linearVel.x);
-            telemetry.addData("posVY",Drive.updatePoseEstimate().linearVel.y);
-            telemetry.addData("AngV", Drive.updatePoseEstimate().angVel);
+            //telemetry.addData("poseVX",Drive.updatePoseEstimate().linearVel.x);
+            //telemetry.addData("posVY",Drive.updatePoseEstimate().linearVel.y);
+            //telemetry.addData("AngV", Drive.updatePoseEstimate().angVel);
+            telemetry.addData("OuttakeTopMotor",outtake.getTopRPM());
+            telemetry.addData("OuttakeBottomMotor",outtake.getBottomRPM());
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
