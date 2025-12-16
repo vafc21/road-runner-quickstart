@@ -65,7 +65,7 @@ public class MainTeleOpMode extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
 //            double rotateSpeed = 0.8;
-            double rotateSpeed = 0.8;
+            double rotateSpeed = 0.65;
             double turn = gamepad1.left_stick_x;
             double drive  =  gamepad1.left_stick_y;
             double rotate = gamepad1.right_stick_x * rotateSpeed;
@@ -77,32 +77,35 @@ public class MainTeleOpMode extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             //intake.intake(gamepad1.a, gamepad1.left_bumper);
-            if (gamepad1.dpad_down){
+            /*if (gamepad1.dpad_down){
                 intake.stopMotor();
                 handoff.stopMotors();
-            }
+            }*/
 //            handoff.handoff(gamepad1.x);
 //            handoff.store(gamepad1.a);
             if (gamepad1.a) {
-                handoff.runMotor(1.0, 1.0);
-                intake.runMotor(1);
+                handoff.store();
+                intake.intake();
             } else if (gamepad1.x) {
-                handoff.runMotor(-1.0, 1.0);
-                intake.runMotor(-1);
+                handoff.handoff();
+                intake.outtake();
             } else {
-                handoff.runMotor(0.0, 0.0);
-                intake.runMotor(0);
+                handoff.stopMotors();
+                intake.stopMotor();
             }
+
             //intake.intake(gamepad1.a,gamepad1.x);
 
 
 
             //intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
-            outtake.outtake(gamepad1.right_bumper);
-            //if (gamepad1.dpad_up) handoff.stopMotors();
+            if (gamepad1.right_bumper){
+                outtake.outtake();
+            } else {
+                outtake.stopMotors();
+            }
 
-            //handoff.handoff(gamepad1.left_bumper);
-            //handoff.store(gamepad1.a);
+
 
 
 //
@@ -123,8 +126,8 @@ public class MainTeleOpMode extends LinearOpMode {
             //telemetry.addData("poseVX",Drive.updatePoseEstimate().linearVel.x);
             //telemetry.addData("posVY",Drive.updatePoseEstimate().linearVel.y);
             //telemetry.addData("AngV", Drive.updatePoseEstimate().angVel);
-            telemetry.addData("OuttakeTopMotor",outtake.getTopRPM());
-            telemetry.addData("OuttakeBottomMotor",outtake.getBottomRPM());
+            //telemetry.addData("OuttakeTopMotor",outtake.getTopRPM());
+            //telemetry.addData("OuttakeBottomMotor",outtake.getBottomRPM());
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();

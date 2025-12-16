@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -7,12 +9,11 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Handoff;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 
-@Autonomous(name = "AutoTest")
+@Autonomous(name = "org.firstinspires.ftc.teamcode.AutoTest")
 public class AutoTest extends LinearOpMode {
     MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
     Intake intake = new Intake(hardwareMap);
@@ -24,21 +25,21 @@ public class AutoTest extends LinearOpMode {
         waitForStart();
         Actions.runBlocking(
                 drive.actionBuilder(new Pose2d(0, 0, 0))
-                        .stopAndAdd(new IntakeAction(true))
+                        .stopAndAdd(new IntakeAction())
                         .lineToX(64)
-                        .stopAndAdd(new IntakeAction(false))
+                        .stopAndAdd(new IntakeAction())
                         .lineToX(0)
-                        .stopAndAdd(new OutakeAction(true))
+                        .stopAndAdd(new OutakeAction())
                         .lineToX(64)
-                        .stopAndAdd(new OutakeAction(false))
+                        .stopAndAdd(new OutakeAction())
                         .lineToX(0)
-                        .stopAndAdd(new HandoffAction(true))
+                        .stopAndAdd(new HandoffAction())
                         .lineToX(64)
-                        .stopAndAdd(new HandoffAction(false))
+                        .stopAndAdd(new HandoffAction())
                         .lineToX(0)
-                        .stopAndAdd(new StoreAction(true))
+                        .stopAndAdd(new StoreAction())
                         .lineToX(64)
-                        .stopAndAdd(new StoreAction(false))
+                        .stopAndAdd(new StoreAction())
                         .lineToX(0)
                         .stopAndAdd(new StopHandoff())
                         .lineToX(64)
@@ -46,46 +47,31 @@ public class AutoTest extends LinearOpMode {
                         .build());
     }
     public class IntakeAction implements Action {
-        boolean b;
-        public IntakeAction(boolean b){
-            this.b = b;
-        }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            intake.intake(b,!b);
+            intake.intake();
             return false;
         }
     }
     public class OutakeAction implements Action {
-        boolean b;
-        public OutakeAction(boolean b){
-            this.b = b;
-        }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            outtake.outtake(b);
+            outtake.outtake();
             return false;
         }
     }
     public class HandoffAction implements Action {
-        boolean b;
-        public HandoffAction(boolean b){
-            this.b = b;
-        }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            handoff.handoff(b);
+            handoff.handoff();
             return false;
         }
     }
     public class StoreAction implements Action {
-        boolean b;
-        public StoreAction(boolean b){
-            this.b = b;
-        }
+
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            handoff.handoff(b);
+            handoff.handoff();
             return false;
         }
     }

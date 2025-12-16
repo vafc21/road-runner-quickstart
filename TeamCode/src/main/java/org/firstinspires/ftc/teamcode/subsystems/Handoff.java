@@ -34,80 +34,13 @@ public class Handoff {
     public void stopMotors(){
         runMotor(0);
     }
-    public void store(boolean t){
-        if (t) {
-            runMotor(pow,1);
-        }else {
-            stopMotors();
-        }
+    public void store(){
+        runMotor(pow,1);
+    }
 
+    public void handoff(){
+        runMotor(-pow,1);
     }
-    public void storeWait(boolean t){
-        if (t){
-            ElapsedTime timer = new ElapsedTime();
-            timer.startTime();
-            while (timer.milliseconds()<3000){
-                handoff(true);
-            }
-            stopMotors();
-        }
 
-    }
-    public void handoff(boolean t){
-        if(t){
-            runMotor(-pow,1);
-
-        } else {
-            stopMotors();
-        }
-
-    }
-    public void handoffWait(boolean t){
-        if (t){
-            ElapsedTime timer = new ElapsedTime();
-            timer.startTime();
-            while (timer.milliseconds()<300){
-                handoff(true);
-            }
-            stopMotors();
-        }
-
-    }
-    public void toggle(boolean t){
-        if (t){
-            if (toggleV){
-                handoff(true);
-                toggleV = false;
-            } else {
-                store(true);
-                toggleV = true;
-            }
-        }
-    }
-    public void toggleWait(boolean t){
-        if (t){
-            if (toggleV){
-                handoffWait(true);
-                toggleV = false;
-            } else {
-                storeWait(true);
-                toggleV = true;
-            }
-        }
-    }
-    public int toggleReturn(boolean t){
-        if (t){
-            if (toggleV){
-                handoffWait(true);
-                toggleV = false;
-                return 1;
-            } else {
-                storeWait(true);
-                toggleV = true;
-                return 2;
-            }
-        }
-        return 0;
-    }
 
 }
