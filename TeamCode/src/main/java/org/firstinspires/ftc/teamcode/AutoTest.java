@@ -56,7 +56,6 @@ public class AutoTest extends LinearOpMode {
     public class OutakeAction implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            outtake.outtake();
             return false;
         }
     }

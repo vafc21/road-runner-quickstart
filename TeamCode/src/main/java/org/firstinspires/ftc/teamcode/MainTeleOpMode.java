@@ -21,6 +21,7 @@ public class MainTeleOpMode extends LinearOpMode {
 //    private DcMotor BRMotor;
 //    private DcMotor BLMotor;
     private final double kp = 0.007;
+    private double outtake_pow=.65;
 
     private Pose2d StartPose = new Pose2d(0, 0, 0);
 
@@ -96,11 +97,21 @@ public class MainTeleOpMode extends LinearOpMode {
 
             //intake.intake(gamepad1.a,gamepad1.x);
 
-
+            /*if (gamepad1.dpad_up) {
+                outtake_pow += .05;
+            } else if (gamepad1.dpad_down) {
+                outtake_pow-=.05;
+            }*/
 
             //intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
-            if (gamepad1.right_bumper){
-                outtake.outtake();
+            if (gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.y){
+                if (gamepad1.right_bumper){
+                    outtake.long_outtake();
+                } else if (gamepad1.left_bumper) {
+                    outtake.short_outtake();
+                } else if (gamepad1.y){
+                    outtake.intake();
+                }
             } else {
                 outtake.stopMotors();
             }
@@ -129,6 +140,7 @@ public class MainTeleOpMode extends LinearOpMode {
             //telemetry.addData("OuttakeTopMotor",outtake.getTopRPM());
             //telemetry.addData("OuttakeBottomMotor",outtake.getBottomRPM());
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Outtake Power 0.0-1.0: ", outtake_pow);
             //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
