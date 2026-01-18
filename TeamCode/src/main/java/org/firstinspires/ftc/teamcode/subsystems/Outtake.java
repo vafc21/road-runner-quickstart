@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Outtake {
     private final DcMotorEx OuttakeTopMotor;
     private final DcMotorEx OuttakeBottomMotor;
-    private final double short_pow = .6;
-    private final double long_pow = .65;
+    private final double short_pow = .6055;
+    private final double long_pow = .67;
 
     public Outtake(HardwareMap hardwareMap){
         OuttakeTopMotor = hardwareMap.get(DcMotorEx.class,"OuttakeTopMotor");
@@ -34,10 +34,10 @@ public class Outtake {
         return (OuttakeTopMotor.getVelocity()/28)*60;
     }*/
     public void short_outtake(){
-        runMotor(short_pow);
+        runMotor(short_pow-0.07,short_pow);
     }
     public void long_outtake(){
-        runMotor(long_pow);
+        runMotor(long_pow-0.07,long_pow);
     }
     public void intake(){
         runMotor(-1);
