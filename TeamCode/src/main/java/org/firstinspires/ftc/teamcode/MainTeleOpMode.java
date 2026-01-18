@@ -69,7 +69,7 @@ public class MainTeleOpMode extends LinearOpMode {
             double rotateSpeed = 0.65;
             double turn = gamepad1.left_stick_x;
             double drive  =  gamepad1.left_stick_y;
-            double rotate = gamepad1.right_stick_x * rotateSpeed;
+            double rotate = -gamepad1.right_stick_x * rotateSpeed;
 
 
             // Tank Mode uses one stick to control each wheel.
