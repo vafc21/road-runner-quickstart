@@ -11,16 +11,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.subsystems.Handoff;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
+import org.firstinspires.ftc.teamcode.util.PIDController;
 
 @TeleOp(name="TeleOp_Main")
 public class MainTeleOpMode extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
+    private PIDController PID = new PIDController(-0.55);
     //    private DcMotor FRMotor = null;
 //    private DcMotor FLMotor = null;
 //    private DcMotor BRMotor;
 //    private DcMotor BLMotor;
-    private final double kp = 0.007;
+    //private final double kp = 0.007;
     private double outtake_pow=.65;
 
     private Pose2d StartPose = new Pose2d(0, 0, 0);
@@ -71,7 +73,7 @@ public class MainTeleOpMode extends LinearOpMode {
             double drive  =  gamepad1.left_stick_y;
             double rotate = -gamepad1.right_stick_x * rotateSpeed;
 
-
+            double delayMsec = 200;
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
@@ -96,17 +98,25 @@ public class MainTeleOpMode extends LinearOpMode {
             }
 
             //intake.intake(gamepad1.a,gamepad1.x);
-
-            /*if (gamepad1.dpad_up) {
+            // for testing!
+            /*double vd = runtime.milliseconds();
+            if (gamepad1.dpad_up && vd==runtime.milliseconds()) {
                 outtake_pow += .05;
-            } else if (gamepad1.dpad_down) {
+                vd+=delayMsec;
+            } else if (gamepad1.dpad_down && vd==runtime.milliseconds()) {
                 outtake_pow-=.05;
+                vd+=delayMsec;
             }*/
 
             //intake.takeInToggle(handoff.toggleReturn(gamepad1.a));
             if (gamepad1.right_bumper || gamepad1.left_bumper || gamepad1.y){
                 if (gamepad1.right_bumper){
-                    outtake.long_outtake();
+                    double bottomDisPow = 1000;
+                    double topDisPow = 1000;
+                    outtake.runTopMotor(PID.calculate(topDisPow,outtake.getTopRPM()));
+                    outtake.runBottomMotor(PID.calculate(bottomDisPow,outtake.getBottomRPM()));
+                    //outtake.long_outtake();
+                    //outtake.runMotor(outtake_pow); //for testing
                 } else if (gamepad1.left_bumper) {
                     outtake.short_outtake();
                 } else if (gamepad1.y){
@@ -137,10 +147,12 @@ public class MainTeleOpMode extends LinearOpMode {
             //telemetry.addData("poseVX",Drive.updatePoseEstimate().linearVel.x);
             //telemetry.addData("posVY",Drive.updatePoseEstimate().linearVel.y);
             //telemetry.addData("AngV", Drive.updatePoseEstimate().angVel);
-            //telemetry.addData("OuttakeTopMotor",outtake.getTopRPM());
-            //telemetry.addData("OuttakeBottomMotor",outtake.getBottomRPM());
+            //telemetry.addData("OuttakeBottomMotor POS",outtake.OuttakeBottomMotor.getCurrentPosition());
+            //telemetry.addData("OuttakeBottomMotor POS Con",outtake.OuttakeBottomMotor.getCurrentPosition()/28);
+            telemetry.addData("OuttakeTopMotorRPM",outtake.getTopRPM());
+            telemetry.addData("OuttakeBottomMotorRPM",outtake.getBottomRPM());
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Outtake Power 0.0-1.0: ", outtake_pow);
+            //telemetry.addData("Outtake Power 0.0-1.0: ", outtake_pow);
             //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
